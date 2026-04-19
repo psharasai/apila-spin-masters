@@ -140,39 +140,100 @@ async function renderKnockout(tournament, playersData) {
         return;
     }
 
-    let html = '<div class="bracket-flex">';
+    // Sort matches by ID within each round to maintain bracket order
+    const qfMatches = knockoutMatches.filter(m => m.round === 'quarterfinal').sort((a, b) => a.id.localeCompare(b.id));
+    const sfMatches = knockoutMatches.filter(m => m.round === 'semifinal');
+    const finalMatches = knockoutMatches.filter(m => m.round === 'final');
 
-    for (const round of rounds) {
-        const matches = knockoutMatches.filter(m => m.round === round);
-        if (matches.length === 0) continue;
-
-        html += `<div class="bracket-round">
-            <div class="bracket-round-title">${roundLabels[round]}</div>
-            <div class="bracket-matches">`;
-
-        for (const match of matches) {
-            const p1Name = await DataStore.getPlayerName(match.player1);
-            const p2Name = await DataStore.getPlayerName(match.player2);
-            const p1Won = Rankings.isWinner(match, match.player1);
-            const scoreText = match.score ? `${match.score[0]}` : (match.walkover ? 'W/O' : '-');
-            const score2Text = match.score ? `${match.score[1]}` : (match.walkover ? 'W/O' : '-');
-
-            html += `
-                <div class="bracket-match">
-                    <div class="bracket-player ${p1Won ? 'winner' : ''}">
-                        <a href="player.html?id=${match.player1}" class="text-decoration-none ${p1Won ? 'text-dark' : 'text-muted'}">${p1Name}</a>
-                        <span class="bracket-player-score">${scoreText}</span>
-                    </div>
-                    <div class="bracket-player ${!p1Won ? 'winner' : ''}">
-                        <a href="player.html?id=${match.player2}" class="text-decoration-none ${!p1Won ? 'text-dark' : 'text-muted'}">${p2Name}</a>
-                        <span class="bracket-player-score">${score2Text}</span>
-                    </div>
-                </div>`;
-        }
-
-        html += '</div></div>'; // close bracket-matches and bracket-round
+    // Build advancement mapping: QF winners → SF slots, SF winners → Final slots
+    // QF1 winner + QF2 winner → SF1 (top half), QF3 winner + QF4 winner → SF2 (bottom half)
+    function getWinner(match) {
+        return Rankings.isWinner(match, match.player1) ? match.player1 : match.player2;
     }
 
+    // Order SF matches so SF1 contains QF1/QF2 winners, SF2 contains QF3/QF4 winners
+    const orderedSF = [];
+    if (qfMatches.length >= 4 && sfMatches.length >= 2) {
+        const qf1Winner = getWinner(qfMatches[0]);
+        const qf2Winner = getWinner(qfMatches[1]);
+        const qf3Winner = getWinner(qfMatches[2]);
+        const qf4Winner = getWinner(qfMatches[3]);
+
+        for (const sf of sfMatches) {
+            const hasTopHalf = [sf.player1, sf.player2].some(p => p === qf1Winner || p === qf2Winner);
+            if (hasTopHalf) orderedSF[0] = sf;
+            else orderedSF[1] = sf;
+        }
+
+        // Within each SF, ensure the earlier QF winner is player1 (top slot)
+        for (let i = 0; i < orderedSF.length; i++) {
+            const sf = orderedSF[i];
+            if (!sf) continue;
+            const earlyWinner = i === 0 ? qf1Winner : qf3Winner;
+            if (sf.player2 === earlyWinner) {
+                // Swap display order
+                orderedSF[i] = { ...sf, _displayP1: sf.player2, _displayP2: sf.player1 };
+            } else {
+                orderedSF[i] = { ...sf, _displayP1: sf.player1, _displayP2: sf.player2 };
+            }
+        }
+    } else {
+        sfMatches.forEach((sf, i) => { orderedSF[i] = { ...sf, _displayP1: sf.player1, _displayP2: sf.player2 }; });
+    }
+
+    // Order Final so SF1 winner is top slot, SF2 winner is bottom slot
+    const orderedFinal = [];
+    if (orderedSF.length >= 2 && finalMatches.length >= 1) {
+        const sf1Winner = getWinner(orderedSF[0]);
+        const f = finalMatches[0];
+        if (f.player2 === sf1Winner) {
+            orderedFinal[0] = { ...f, _displayP1: f.player2, _displayP2: f.player1 };
+        } else {
+            orderedFinal[0] = { ...f, _displayP1: f.player1, _displayP2: f.player2 };
+        }
+    } else {
+        finalMatches.forEach((f, i) => { orderedFinal[i] = { ...f, _displayP1: f.player1, _displayP2: f.player2 }; });
+    }
+
+    // Render helper
+    async function renderMatch(match) {
+        const p1 = match._displayP1 || match.player1;
+        const p2 = match._displayP2 || match.player2;
+        const p1Name = await DataStore.getPlayerName(p1);
+        const p2Name = await DataStore.getPlayerName(p2);
+        const p1Won = Rankings.isWinner(match, p1);
+        const scoreP1 = match.score ? (p1 === match.player1 ? match.score[0] : match.score[1]) : (match.walkover ? 'W/O' : '-');
+        const scoreP2 = match.score ? (p2 === match.player1 ? match.score[0] : match.score[1]) : (match.walkover ? 'W/O' : '-');
+
+        return `
+            <div class="bracket-match">
+                <div class="bracket-player ${p1Won ? 'winner' : ''}">
+                    <a href="player.html?id=${p1}" class="text-decoration-none ${p1Won ? 'text-dark' : 'text-muted'}">${p1Name}</a>
+                    <span class="bracket-player-score">${scoreP1}</span>
+                </div>
+                <div class="bracket-player ${!p1Won ? 'winner' : ''}">
+                    <a href="player.html?id=${p2}" class="text-decoration-none ${!p1Won ? 'text-dark' : 'text-muted'}">${p2Name}</a>
+                    <span class="bracket-player-score">${scoreP2}</span>
+                </div>
+            </div>`;
+    }
+
+    // Build bracket HTML
+    const allRounds = [
+        { label: 'Quarterfinals', matches: qfMatches.map(m => ({ ...m, _displayP1: m.player1, _displayP2: m.player2 })) },
+        { label: 'Semifinals', matches: orderedSF.filter(Boolean) },
+        { label: 'Final', matches: orderedFinal.filter(Boolean) }
+    ];
+
+    let html = '<div class="bracket-flex">';
+    for (const round of allRounds) {
+        if (round.matches.length === 0) continue;
+        const matchHtml = await Promise.all(round.matches.map(m => renderMatch(m)));
+        html += `<div class="bracket-round">
+            <div class="bracket-round-title">${round.label}</div>
+            <div class="bracket-matches">${matchHtml.join('')}</div>
+        </div>`;
+    }
     html += '</div>';
     container.innerHTML = html;
 }
