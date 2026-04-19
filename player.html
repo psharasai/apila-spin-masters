@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player — EIPL Apila TT League</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <span class="me-2" style="font-size:1.3rem">🏓</span>EIPL Apila TT League
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="bi bi-bar-chart-fill me-1"></i>Rankings</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="tournamentsDropdown">
+                            <i class="bi bi-calendar-event me-1"></i>Tournaments
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="tournamentMenu"></ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="players.html"><i class="bi bi-people-fill me-1"></i>Players</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="rules.html"><i class="bi bi-book me-1"></i>Rules</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="h2h.html"><i class="bi bi-arrow-left-right me-1"></i>Head-to-Head</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div class="d-flex align-items-center mb-4">
+            <a href="players.html" class="btn btn-outline-secondary me-3"><i class="bi bi-arrow-left"></i></a>
+            <div>
+                <h2 class="mb-0" id="playerName">Loading...</h2>
+                <span class="badge bg-secondary" id="playerTier"></span>
+            </div>
+        </div>
+
+        <!-- Player Stats Cards -->
+        <div class="row g-3 mb-4" id="playerStats">
+            <div class="col-6 col-md-3">
+                <div class="card text-center h-100 stat-card">
+                    <div class="card-body">
+                        <div class="stat-number" id="pStatRank">-</div>
+                        <div class="stat-label">Overall Rank</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card text-center h-100 stat-card">
+                    <div class="card-body">
+                        <div class="stat-number" id="pStatPoints">-</div>
+                        <div class="stat-label">Total Points</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card text-center h-100 stat-card">
+                    <div class="card-body">
+                        <div class="stat-number" id="pStatRecord">-</div>
+                        <div class="stat-label">W / L</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card text-center h-100 stat-card">
+                    <div class="card-body">
+                        <div class="stat-number" id="pStatWinPct">-</div>
+                        <div class="stat-label">Win %</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Points Breakdown by Tournament -->
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Points by Tournament</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tournament</th>
+                                <th class="text-center">Played</th>
+                                <th class="text-center">Won</th>
+                                <th class="text-center">Lost</th>
+                                <th class="text-center">Placement</th>
+                                <th class="text-center">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pointsBreakdown"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Match History -->
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Match History</h5>
+            </div>
+            <div class="card-body" id="matchHistory">
+                <p class="text-muted text-center py-3">Loading...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light text-center py-3 mt-5">
+        <small>EIPL Apila TT League &copy; 2026 | Organized by <strong>Apila Spin Masters</strong> | Powered by <i class="bi bi-github"></i> GitHub Pages</small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/rankings.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/player.js"></script>
+</body>
+</html>

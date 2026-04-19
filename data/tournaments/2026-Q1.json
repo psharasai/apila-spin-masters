@@ -1,0 +1,171 @@
+{
+  "id": "2026-Q1",
+  "name": "Q1 2026 Tournament",
+  "date": "2026-03-28",
+  "scoringType": "placement",
+  "notes": "This was the inaugural EIPL Apila TT League tournament. Players were divided into 3 skill tiers based on known playing ability — Tier 1 (advanced), Tier 2 (intermediate), and Tier 3 (beginner). Four groups were formed by picking one player from each tier to ensure balanced groups. Chanakya and Deepak Nagrath withdrew before their group matches.",
+  "groups": [
+    {
+      "name": "Group A",
+      "players": ["praveen-varma", "shikhar", "chanakya"]
+    },
+    {
+      "name": "Group B",
+      "players": ["abhijit", "deepak-nagrath", "sudhanshu"]
+    },
+    {
+      "name": "Group C",
+      "players": ["ravisankar", "pramod-kumar", "kangkan-kumar"]
+    },
+    {
+      "name": "Group D",
+      "players": ["sai-sharath", "akhil", "ranjit"]
+    }
+  ],
+  "withdrawals": ["chanakya", "deepak-nagrath"],
+  "matches": [
+    {
+      "id": "gs-a1",
+      "round": "group",
+      "group": "Group A",
+      "player1": "shikhar",
+      "player2": "praveen-varma",
+      "score": [2, 1],
+      "setScores": [[10, 12], [11, 2], [11, 6]],
+      "walkover": false
+    },
+    {
+      "id": "gs-b1",
+      "round": "group",
+      "group": "Group B",
+      "player1": "abhijit",
+      "player2": "sudhanshu",
+      "score": [2, 0],
+      "setScores": [[11, 7], [11, 6]],
+      "walkover": false
+    },
+    {
+      "id": "gs-c1",
+      "round": "group",
+      "group": "Group C",
+      "player1": "ravisankar",
+      "player2": "kangkan-kumar",
+      "score": [2, 0],
+      "setScores": [[11, 2], [11, 5]],
+      "walkover": false
+    },
+    {
+      "id": "gs-c2",
+      "round": "group",
+      "group": "Group C",
+      "player1": "pramod-kumar",
+      "player2": "ravisankar",
+      "score": [2, 0],
+      "setScores": [[11, 7], [11, 9]],
+      "walkover": false
+    },
+    {
+      "id": "gs-c3",
+      "round": "group",
+      "group": "Group C",
+      "player1": "pramod-kumar",
+      "player2": "kangkan-kumar",
+      "score": [2, 0],
+      "setScores": [[11, 7], [11, 5]],
+      "walkover": false
+    },
+    {
+      "id": "gs-d1",
+      "round": "group",
+      "group": "Group D",
+      "player1": "sai-sharath",
+      "player2": "ranjit",
+      "score": [2, 0],
+      "setScores": [[11, 7], [11, 1]],
+      "walkover": false
+    },
+    {
+      "id": "gs-d2",
+      "round": "group",
+      "group": "Group D",
+      "player1": "sai-sharath",
+      "player2": "akhil",
+      "score": [2, 0],
+      "setScores": [[11, 3], [11, 7]],
+      "walkover": false
+    },
+    {
+      "id": "gs-d3",
+      "round": "group",
+      "group": "Group D",
+      "player1": "akhil",
+      "player2": "ranjit",
+      "score": [2, 0],
+      "setScores": [[11, 7], [12, 10]],
+      "walkover": false
+    },
+    {
+      "id": "qf-1",
+      "round": "quarterfinal",
+      "player1": "ravisankar",
+      "player2": "shikhar",
+      "score": [2, 0],
+      "setScores": [[11, 7], [11, 5]],
+      "walkover": false
+    },
+    {
+      "id": "qf-2",
+      "round": "quarterfinal",
+      "player1": "praveen-varma",
+      "player2": "pramod-kumar",
+      "score": [2, 0],
+      "setScores": [[11, 2], [11, 5]],
+      "walkover": false
+    },
+    {
+      "id": "qf-3",
+      "round": "quarterfinal",
+      "player1": "abhijit",
+      "player2": "akhil",
+      "score": [2, 0],
+      "setScores": [[11, 6], [11, 8]],
+      "walkover": false
+    },
+    {
+      "id": "qf-4",
+      "round": "quarterfinal",
+      "player1": "sai-sharath",
+      "player2": "sudhanshu",
+      "score": [2, 0],
+      "setScores": [[11, 1], [11, 6]],
+      "walkover": false
+    },
+    {
+      "id": "sf-1",
+      "round": "semifinal",
+      "player1": "praveen-varma",
+      "player2": "ravisankar",
+      "score": [2, 1],
+      "setScores": [[11, 6], [8, 11], [11, 2]],
+      "walkover": false
+    },
+    {
+      "id": "sf-2",
+      "round": "semifinal",
+      "player1": "sai-sharath",
+      "player2": "abhijit",
+      "score": [2, 0],
+      "setScores": [[11, 9], [16, 14]],
+      "walkover": false
+    },
+    {
+      "id": "final",
+      "round": "final",
+      "player1": "praveen-varma",
+      "player2": "sai-sharath",
+      "score": [2, 1],
+      "setScores": [[11, 7], [6, 11], [11, 3]],
+      "walkover": false
+    }
+  ]
+}

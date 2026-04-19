@@ -1,0 +1,814 @@
+/* ===== EIPL Apila TT League — Table Tennis Theme ===== */
+
+:root {
+    --tt-primary: #1b3a4b;
+    --tt-dark: #0d1f2d;
+    --tt-accent: #ff6600;
+    --tt-ball: #ff8c00;
+    --tt-table: #1a6b3c;
+    --tt-table-light: rgba(26, 107, 60, 0.15);
+    --tt-gold: #ffd700;
+    --tt-gold-bg: linear-gradient(135deg, #ffd700, #ffb300);
+    --tt-gold-glow: rgba(255, 215, 0, 0.25);
+    --tt-silver: #c0c0c0;
+    --tt-silver-bg: linear-gradient(135deg, #d4d4d4, #a8a8a8);
+    --tt-silver-glow: rgba(192, 192, 192, 0.25);
+    --tt-bronze: #cd7f32;
+    --tt-bronze-bg: linear-gradient(135deg, #cd7f32, #a0622a);
+    --tt-bronze-glow: rgba(205, 127, 50, 0.25);
+    --tt-body-bg: #0f1923;
+    --tt-surface: #162a3a;
+    --tt-surface-light: #1e3a50;
+    --tt-text: #e0e6ed;
+    --tt-text-muted: #8899aa;
+}
+
+/* Dark sports body with subtle TT ball pattern */
+body {
+    background-color: var(--tt-body-bg);
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(255, 102, 0, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 85% 80%, rgba(26, 107, 60, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 140, 0, 0.02) 0%, transparent 60%);
+    color: var(--tt-text);
+    min-height: 100vh;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+
+/* ========== HERO BANNER ========== */
+.hero-banner {
+    background: linear-gradient(135deg, #060d13 0%, var(--tt-dark) 40%, var(--tt-primary) 100%);
+    padding: 3rem 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--tt-accent);
+}
+.hero-bg-art {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.hero-paddle {
+    position: absolute;
+    right: -30px;
+    top: -20px;
+    width: 320px;
+    height: 500px;
+    opacity: 0.6;
+    transform: rotate(-15deg);
+}
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.text-accent { color: var(--tt-accent) !important; }
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--tt-text-muted);
+    margin-top: 12px;
+    font-weight: 400;
+}
+.hero-stat-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+}
+.hero-stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--tt-accent);
+}
+.hero-stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--tt-text-muted);
+    margin-top: 2px;
+}
+
+/* Navbar — dark with orange accent */
+.navbar {
+    background: linear-gradient(135deg, #060d13, var(--tt-dark)) !important;
+    border-bottom: 3px solid var(--tt-accent);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.navbar-brand {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+/* Container — slight card surface */
+main.container {
+    position: relative;
+}
+
+/* ========== PODIUM — Top 3 showcase ========== */
+.podium-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 2rem;
+    padding: 20px 0;
+}
+.podium-card {
+    text-align: center;
+    border-radius: 16px;
+    padding: 24px 20px 20px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    min-width: 140px;
+}
+.podium-card:hover {
+    transform: translateY(-6px);
+    color: inherit;
+}
+.podium-card .podium-rank {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.podium-card .podium-medal {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 8px;
+}
+.podium-card .podium-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.podium-card .podium-points {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+.podium-card .podium-record {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 4px;
+}
+
+/* Gold — 1st place */
+.podium-gold {
+    background: linear-gradient(160deg, #3d3000, #5c4a00, #3d3000);
+    border: 2px solid var(--tt-gold);
+    box-shadow: 0 0 30px var(--tt-gold-glow), 0 8px 32px rgba(0,0,0,0.4);
+    order: 2;
+    padding-bottom: 30px;
+}
+.podium-gold .podium-rank { color: var(--tt-gold); }
+.podium-gold .podium-name { color: var(--tt-gold); }
+
+/* Silver — 2nd place */
+.podium-silver {
+    background: linear-gradient(160deg, #2a2a2a, #3d3d3d, #2a2a2a);
+    border: 2px solid var(--tt-silver);
+    box-shadow: 0 0 20px var(--tt-silver-glow), 0 6px 24px rgba(0,0,0,0.3);
+    order: 1;
+}
+.podium-silver .podium-rank { color: var(--tt-silver); }
+.podium-silver .podium-name { color: var(--tt-silver); }
+
+/* Bronze — 3rd place */
+.podium-bronze {
+    background: linear-gradient(160deg, #2a1a08, #3d2810, #2a1a08);
+    border: 2px solid var(--tt-bronze);
+    box-shadow: 0 0 20px var(--tt-bronze-glow), 0 6px 24px rgba(0,0,0,0.3);
+    order: 3;
+}
+.podium-bronze .podium-rank { color: var(--tt-bronze); }
+.podium-bronze .podium-name { color: var(--tt-bronze); }
+
+/* ========== Stat cards ========== */
+.stat-card {
+    border: none;
+    border-radius: 12px;
+    background: var(--tt-surface);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    transition: transform 0.15s ease;
+    border-top: 3px solid var(--tt-accent);
+}
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--tt-accent);
+}
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--tt-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========== Cards ========== */
+.card {
+    background: var(--tt-surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+}
+
+/* Card headers */
+.card-header.bg-dark {
+    background: linear-gradient(135deg, var(--tt-primary), var(--tt-dark)) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ========== Rankings table ========== */
+.table {
+    color: var(--tt-text);
+}
+.table thead.table-light th {
+    background: var(--tt-surface-light) !important;
+    color: var(--tt-text-muted);
+    border-color: rgba(255,255,255,0.06);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.table tbody tr {
+    border-color: rgba(255,255,255,0.04);
+}
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 102, 0, 0.08) !important;
+    color: var(--tt-text);
+}
+#rankingsTable tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    min-height: 48px; /* touch-friendly row height */
+}
+#rankingsTable tbody td {
+    vertical-align: middle;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Podium row highlights in table */
+.rank-row-gold {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.12), transparent 70%) !important;
+    border-left: 4px solid var(--tt-gold) !important;
+}
+.rank-row-silver {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.10), transparent 70%) !important;
+    border-left: 4px solid var(--tt-silver) !important;
+}
+.rank-row-bronze {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.10), transparent 70%) !important;
+    border-left: 4px solid var(--tt-bronze) !important;
+}
+
+.rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 0.95rem;
+}
+.rank-1 {
+    background: var(--tt-gold-bg);
+    color: #000;
+    box-shadow: 0 0 12px var(--tt-gold-glow);
+}
+.rank-2 {
+    background: var(--tt-silver-bg);
+    color: #000;
+    box-shadow: 0 0 10px var(--tt-silver-glow);
+}
+.rank-3 {
+    background: var(--tt-bronze-bg);
+    color: #fff;
+    box-shadow: 0 0 10px var(--tt-bronze-glow);
+}
+.rank-default { background: rgba(255,255,255,0.08); color: var(--tt-text-muted); }
+
+/* ========== Group tables ========== */
+.group-card {
+    border-left: 4px solid var(--tt-table);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.group-card .card-header {
+    background: linear-gradient(135deg, var(--tt-table), #145a30) !important;
+    color: white;
+}
+.table-success {
+    background-color: rgba(26, 107, 60, 0.15) !important;
+    color: var(--tt-text) !important;
+}
+
+/* ========== Match cards ========== */
+.match-card {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: var(--tt-surface);
+    transition: box-shadow 0.15s, border-color 0.15s;
+}
+.match-card:hover {
+    box-shadow: 0 3px 16px rgba(0,0,0,0.2);
+    border-color: var(--tt-accent);
+}
+.match-winner {
+    font-weight: 700;
+    color: var(--tt-text);
+}
+.match-winner a { color: var(--tt-text) !important; }
+.match-loser {
+    color: var(--tt-text-muted);
+}
+.match-loser a { color: var(--tt-text-muted) !important; }
+.match-score {
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family: 'Courier New', monospace;
+    color: var(--tt-accent);
+}
+.set-scores {
+    font-size: 0.8rem;
+    color: var(--tt-text-muted);
+}
+
+/* ========== Knockout bracket ========== */
+.bracket-container {
+    overflow-x: auto;
+    padding: 20px 0;
+}
+.bracket-round {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 220px;
+    margin-right: 40px;
+}
+.bracket-round-title {
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--tt-accent);
+    margin-bottom: 16px;
+}
+.bracket-match {
+    background: var(--tt-surface);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.bracket-player {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+.bracket-player:first-child {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.bracket-player.winner {
+    background: rgba(26, 107, 60, 0.2);
+    font-weight: 700;
+}
+.bracket-player.winner a { color: var(--tt-text) !important; }
+.bracket-player a { color: var(--tt-text-muted) !important; }
+.bracket-player-score {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    color: var(--tt-accent);
+}
+
+/* ========== Player cards ========== */
+.player-card {
+    border: none;
+    border-radius: 12px;
+    background: var(--tt-surface);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--tt-text);
+}
+.player-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    color: var(--tt-text);
+}
+.player-card .text-muted { color: var(--tt-text-muted) !important; }
+.player-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--tt-accent), var(--tt-ball));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* ========== Tournament history cards ========== */
+.tournament-card {
+    border-left: 4px solid var(--tt-accent);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.15s;
+    background: var(--tt-surface);
+}
+.tournament-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+}
+.tournament-card h5 { color: var(--tt-text); }
+.tournament-card .text-muted { color: var(--tt-text-muted) !important; }
+
+/* ========== Badges ========== */
+.badge-walkover {
+    background-color: #ffc107;
+    color: #000;
+    font-size: 0.7rem;
+}
+.round-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* ========== H2H page ========== */
+.form-select {
+    background-color: var(--tt-surface);
+    border-color: rgba(255,255,255,0.1);
+    color: var(--tt-text);
+}
+.form-select:focus {
+    border-color: var(--tt-accent);
+    box-shadow: 0 0 0 0.2rem rgba(255, 102, 0, 0.25);
+    background-color: var(--tt-surface-light);
+    color: var(--tt-text);
+}
+.form-select option {
+    background-color: var(--tt-dark);
+    color: var(--tt-text);
+}
+.form-label { color: var(--tt-text); }
+
+/* ========== Misc overrides for dark theme ========== */
+.text-muted { color: var(--tt-text-muted) !important; }
+a.text-decoration-none { color: var(--tt-accent); }
+a.text-decoration-none:hover { color: var(--tt-ball); }
+.text-success { color: #4caf50 !important; }
+.text-danger { color: #ef5350 !important; }
+.badge.bg-secondary { background-color: var(--tt-surface-light) !important; }
+
+/* ========== Nav tabs (dark theme) ========== */
+.nav-tabs {
+    border-color: rgba(255,255,255,0.1);
+}
+.nav-tabs .nav-link {
+    color: var(--tt-text-muted);
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.2s, border-color 0.2s;
+}
+.nav-tabs .nav-link:hover {
+    color: var(--tt-text);
+    border-color: rgba(255,102,0,0.3);
+}
+.nav-tabs .nav-link.active {
+    color: var(--tt-accent);
+    background: transparent;
+    border-color: var(--tt-accent);
+}
+
+/* Scroll hint for bracket on mobile */
+.bracket-container {
+    overflow-x: auto;
+    padding: 20px 0;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+.bracket-container::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 40px;
+    background: linear-gradient(90deg, transparent, var(--tt-body-bg));
+    pointer-events: none;
+}
+
+/* ========== Rules page ========== */
+.rules-list {
+    padding-left: 1.2rem;
+    line-height: 1.8;
+}
+.rules-list li {
+    margin-bottom: 6px;
+}
+.rules-cal-card {
+    background: var(--tt-surface);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.15s;
+}
+.rules-cal-card:hover { transform: translateY(-2px); }
+.rules-cal-month {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--tt-text);
+}
+.rules-cal-type {
+    font-size: 0.8rem;
+    color: var(--tt-accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.rules-cal-finale {
+    border-color: var(--tt-gold);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+}
+.rules-cal-finale .rules-cal-month { color: var(--tt-gold); }
+
+/* ========== Marquee / Announcement banner ========== */
+.marquee-banner {
+    background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,215,0,0.06));
+    border: 1px solid rgba(255,102,0,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.marquee-congrats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.marquee-congrats .trophy-icon {
+    font-size: 1.8rem;
+}
+.marquee-congrats .congrats-text {
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+.marquee-congrats .congrats-name {
+    font-weight: 700;
+    color: var(--tt-gold);
+}
+.marquee-next {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+.marquee-next .next-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--tt-text-muted);
+}
+.marquee-next .next-date {
+    font-weight: 700;
+    color: var(--tt-accent);
+}
+
+/* ========== Sortable table headers ========== */
+.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+}
+.sortable:hover {
+    color: var(--tt-accent) !important;
+}
+.sort-icon {
+    font-size: 0.7rem;
+    opacity: 0.3;
+    transition: opacity 0.15s;
+}
+
+/* ========== Footer ========== */
+footer {
+    background: linear-gradient(135deg, #060d13, var(--tt-dark)) !important;
+    border-top: 3px solid var(--tt-accent);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 992px) {
+    .hero-title { font-size: 2.4rem; }
+    .hero-paddle { width: 240px; opacity: 0.35; }
+}
+
+@media (max-width: 768px) {
+    /* Hero */
+    .hero-banner { padding: 1.5rem 0; }
+    .hero-title { font-size: 1.8rem; }
+    .hero-subtitle { font-size: 0.95rem; }
+    .hero-paddle { width: 180px; opacity: 0.2; right: -50px; }
+    .hero-stat-card { padding: 10px 8px; }
+    .hero-stat-number { font-size: 1.3rem; }
+    .hero-stat-label { font-size: 0.65rem; }
+
+    /* Podium — stack vertically: gold on top */
+    .podium-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    .podium-card {
+        order: unset !important;
+        min-width: unset;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+    }
+    .podium-card .podium-medal { font-size: 1.6rem; margin-bottom: 0; }
+    .podium-card .podium-rank { font-size: 1.2rem; margin-bottom: 0; display: none; }
+    .podium-gold { padding-bottom: 16px; }
+
+    /* Stats */
+    .stat-number { font-size: 1.4rem; }
+    .stat-label { font-size: 0.7rem; }
+
+    /* Rankings table — hide Tournaments column on mobile */
+    #rankingsTable th:nth-child(3),
+    #rankingsTable td:nth-child(3) {
+        display: none;
+    }
+    .rank-badge { width: 28px; height: 28px; font-size: 0.8rem; }
+
+    /* Players table — hide Played and Win% on mobile */
+    #playersTable th:nth-child(3),
+    #playersTable td:nth-child(3),
+    #playersTable th:nth-child(6),
+    #playersTable td:nth-child(6) {
+        display: none;
+    }
+
+    /* Match cards — stack content */
+    .match-card {
+        flex-wrap: wrap;
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    .match-score { font-size: 1rem; }
+
+    /* Bracket */
+    .bracket-round { min-width: 160px; margin-right: 16px; }
+    .bracket-player { padding: 6px 8px; font-size: 0.8rem; }
+    .bracket-round-title { font-size: 0.7rem; }
+
+    /* Tournament cards */
+    .tournament-card .card-body {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 8px;
+    }
+
+    /* Player avatar */
+    .player-avatar { width: 40px; height: 40px; font-size: 1rem; }
+
+    /* Container padding */
+    main.container { padding-left: 12px; padding-right: 12px; }
+
+    /* Page headings */
+    h2 { font-size: 1.4rem; }
+
+    /* Player page — points breakdown table: hide Played/Won/Lost */
+    .card .table th:nth-child(2),
+    .card .table td:nth-child(2),
+    .card .table th:nth-child(3),
+    .card .table td:nth-child(3),
+    .card .table th:nth-child(4),
+    .card .table td:nth-child(4) {
+        display: none;
+    }
+
+    /* Nav tabs compact */
+    .nav-tabs .nav-link {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Group tables — wrap match results below table */
+    .group-card .table {
+        font-size: 0.82rem;
+    }
+    .group-card .table th,
+    .group-card .table td {
+        padding: 6px 8px;
+    }
+
+    /* H2H stat cards */
+    .stat-card .card-body { padding: 12px 8px; }
+
+    /* Marquee — stack vertically */
+    .marquee-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+        padding: 14px 16px;
+    }
+    .marquee-congrats { justify-content: center; }
+    .marquee-next { width: 100%; }
+
+    /* Rules calendar */
+    .rules-cal-card { padding: 12px 8px; }
+    .rules-cal-month { font-size: 1.1rem; }
+    .rules-cal-type { font-size: 0.7rem; }
+
+    /* Fix small text — ensure minimum 12px */
+    .hero-stat-label { font-size: 0.7rem; }
+    .marquee-next .next-label { font-size: 0.7rem; }
+    footer small { font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 1.5rem; }
+    .hero-paddle { display: none; }
+    .navbar-brand { font-size: 0.95rem; }
+    .hero-banner { padding: 1.2rem 0; }
+    .hero-stat-number { font-size: 1.1rem; }
+
+    /* Rankings — already minimal at 480 */
+
+    /* Players table — also hide Won/Lost on very small screens */
+    #playersTable th:nth-child(4),
+    #playersTable td:nth-child(4),
+    #playersTable th:nth-child(5),
+    #playersTable td:nth-child(5) {
+        display: none;
+    }
+
+    /* Group tables — compact */
+    .group-card .table th,
+    .group-card .table td {
+        padding: 4px 6px;
+        font-size: 0.75rem;
+    }
+    /* Hide Sets column in group table */
+    .group-card .table th:nth-child(6),
+    .group-card .table td:nth-child(6) {
+        display: none;
+    }
+
+    /* Player cards — full width */
+    .player-card .card-body { padding: 10px 12px; }
+
+    /* Podium */
+    .podium-card .podium-name { font-size: 0.95rem; }
+    .podium-card .podium-points { font-size: 0.8rem; }
+
+    /* Bracket — even more compact */
+    .bracket-round { min-width: 140px; margin-right: 12px; }
+    .bracket-player { padding: 5px 6px; font-size: 0.75rem; }
+
+    /* H2H — compact stats on tiny screens */
+    .stat-card .stat-number { font-size: 1.2rem; }
+    .stat-card .stat-label { font-size: 0.65rem; }
+
+    /* Rules — stack calendar 2-up */
+    .rules-cal-card { padding: 10px 6px; }
+    .rules-cal-month { font-size: 1rem; }
+    .rules-list { padding-left: 1rem; font-size: 0.88rem; }
+
+    /* Marquee — tighter */
+    .marquee-banner { padding: 12px; }
+    .marquee-congrats .trophy-icon { font-size: 1.4rem; }
+    .marquee-congrats .congrats-text { font-size: 0.82rem; }
+
+    /* Footer */
+    footer small { font-size: 0.7rem; }
+}
