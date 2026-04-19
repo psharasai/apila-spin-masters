@@ -140,14 +140,15 @@ async function renderKnockout(tournament, playersData) {
         return;
     }
 
-    let html = '<div class="d-flex align-items-start">';
+    let html = '<div class="bracket-flex">';
 
     for (const round of rounds) {
         const matches = knockoutMatches.filter(m => m.round === round);
         if (matches.length === 0) continue;
 
         html += `<div class="bracket-round">
-            <div class="bracket-round-title">${roundLabels[round]}</div>`;
+            <div class="bracket-round-title">${roundLabels[round]}</div>
+            <div class="bracket-matches">`;
 
         for (const match of matches) {
             const p1Name = await DataStore.getPlayerName(match.player1);
@@ -169,7 +170,7 @@ async function renderKnockout(tournament, playersData) {
                 </div>`;
         }
 
-        html += '</div>';
+        html += '</div></div>'; // close bracket-matches and bracket-round
     }
 
     html += '</div>';

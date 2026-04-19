@@ -357,13 +357,19 @@ main.container {
 .bracket-container {
     overflow-x: auto;
     padding: 20px 0;
+    -webkit-overflow-scrolling: touch;
+}
+.bracket-flex {
+    display: flex;
+    align-items: stretch;
 }
 .bracket-round {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     min-width: 220px;
     margin-right: 40px;
+    position: relative;
 }
 .bracket-round-title {
     text-align: center;
@@ -373,12 +379,19 @@ main.container {
     letter-spacing: 1px;
     color: var(--tt-accent);
     margin-bottom: 16px;
+    flex-shrink: 0;
+}
+.bracket-matches {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1;
+    gap: 8px;
 }
 .bracket-match {
     background: var(--tt-surface);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px;
-    margin-bottom: 16px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
