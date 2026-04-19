@@ -42,7 +42,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function renderGroupStage(tournament, playersData) {
     const container = document.getElementById('groupTables');
     if (!tournament.groups || tournament.groups.length === 0) {
-        container.innerHTML = '<p class="text-muted">No group stage data</p>';
+        if (tournament.seedings && tournament.seedings.length > 0) {
+            let html = '<div class="col-12"><div class="card"><div class="card-header bg-dark text-white"><h6 class="mb-0">Seedings</h6></div>';
+            html += '<div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0">';
+            html += '<thead class="table-light"><tr><th class="text-center" style="width:60px">Seed</th><th>Player</th><th class="text-center">Points</th></tr></thead><tbody>';
+            for (const s of tournament.seedings) {
+                const name = await DataStore.getPlayerName(s.playerId);
+                html += `<tr><td class="text-center fw-bold">${s.seed}</td><td><a href="player.html?id=${s.playerId}" class="text-decoration-none">${name}</a></td><td class="text-center">${s.points}</td></tr>`;
+            }
+            html += '</tbody></table></div></div></div></div>';
+            html += '<div class="col-12"><p class="text-muted text-center mt-3"><i class="bi bi-info-circle me-1"></i>Groups will be announced before the tournament</p></div>';
+            container.innerHTML = html;
+        } else {
+            container.innerHTML = '<p class="text-muted text-center py-4"><i class="bi bi-clock me-2"></i>Groups will be announced before the tournament</p>';
+        }
         return;
     }
 
@@ -123,7 +136,7 @@ async function renderKnockout(tournament, playersData) {
 
     const knockoutMatches = tournament.matches.filter(m => rounds.includes(m.round));
     if (knockoutMatches.length === 0) {
-        container.innerHTML = '<p class="text-muted">No knockout matches</p>';
+        container.innerHTML = '<p class="text-muted text-center py-4"><i class="bi bi-clock me-2"></i>Knockout bracket will be available after the group stage</p>';
         return;
     }
 
@@ -168,7 +181,7 @@ async function renderAllMatches(tournament) {
     const matches = tournament.matches.filter(m => !m.bye);
 
     if (matches.length === 0) {
-        container.innerHTML = '<p class="text-muted text-center">No matches</p>';
+        container.innerHTML = '<p class="text-muted text-center py-4"><i class="bi bi-clock me-2"></i>No matches played yet</p>';
         return;
     }
 

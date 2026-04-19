@@ -1,5 +1,8 @@
 {
   "tournaments": [
-    { "id": "2026-Q1", "name": "Q1 2026 Tournament", "date": "2026-03-28" }
+    { "id": "2026-Q1", "name": "Q1 2026 Tournament", "date": "2026-03-28", "status": "completed" },
+    { "id": "2026-Q2", "name": "Q2 2026 Tournament", "date": "2026-06-06", "status": "upcoming" },
+    { "id": "2026-Q3", "name": "Q3 2026 Tournament", "date": "2026-09-05", "status": "upcoming" },
+    { "id": "2026-finale", "name": "Year-End Finale 2026", "date": "2026-12-05", "status": "upcoming" }
   ]
 }

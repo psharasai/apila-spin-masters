@@ -13,7 +13,11 @@ const Common = (() => {
             menu.innerHTML = '';
             for (const t of index.tournaments) {
                 const li = document.createElement('li');
-                li.innerHTML = `<a class="dropdown-item" href="tournament.html?id=${t.id}">${t.name}</a>`;
+                const isUpcoming = t.status === 'upcoming';
+                li.innerHTML = `<a class="dropdown-item ${isUpcoming ? 'text-muted' : ''}" href="tournament.html?id=${t.id}">
+                    ${t.name} <small class="ms-1">${t.date}</small>
+                    ${isUpcoming ? '<span class="badge bg-warning text-dark ms-2" style="font-size:0.65rem">Upcoming</span>' : ''}
+                </a>`;
                 menu.appendChild(li);
             }
         } catch (e) {

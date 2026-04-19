@@ -3,18 +3,21 @@
  */
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const [playersData, tournaments] = await Promise.all([
+        const [playersData, allTournaments] = await Promise.all([
             DataStore.getPlayers(),
             DataStore.getAllTournaments()
         ]);
 
+        // Only completed tournaments (with matches) for rankings/stats
+        const tournaments = allTournaments.filter(t => t.matches && t.matches.length > 0);
+
         const rankings = Rankings.computeRankings(tournaments, playersData.players);
 
         renderStats(tournaments, playersData.players, rankings);
-        renderMarquee(tournaments, rankings);
+        renderMarquee(tournaments, allTournaments);
         renderPodium(rankings, tournaments);
         renderRankings(rankings);
-        renderTournamentHistory(tournaments);
+        renderTournamentHistory(allTournaments);
     } catch (err) {
         console.error('Error loading home page:', err);
         document.getElementById('rankingsBody').innerHTML =
@@ -27,39 +30,20 @@ function renderStats(tournaments, players, rankings) {
     document.getElementById('statPlayers').textContent = players.length;
 
     const totalMatches = tournaments.reduce((sum, t) =>
-        sum + t.matches.filter(m => !m.bye).length, 0);
+        sum + (t.matches ? t.matches.filter(m => !m.bye).length : 0), 0);
     document.getElementById('statMatches').textContent = totalMatches;
 }
 
-async function renderMarquee(tournaments, rankings) {
+async function renderMarquee(completedTournaments, allTournaments) {
     const banner = document.getElementById('marqueeBanner');
-    if (!banner || tournaments.length === 0) return;
+    if (!banner || completedTournaments.length === 0) return;
 
-    const latest = tournaments[tournaments.length - 1];
+    const latest = completedTournaments[completedTournaments.length - 1];
     const champId = Rankings.getChampion(latest);
     const champName = champId ? await DataStore.getPlayerName(champId) : null;
 
-    // Determine next tournament
-    const tournamentMonths = [
-        { month: 3, label: 'March' },
-        { month: 6, label: 'June' },
-        { month: 9, label: 'September' },
-        { month: 12, label: 'December (Year-End Finale)' }
-    ];
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1;
-
-    let nextTournament = null;
-    for (const t of tournamentMonths) {
-        if (t.month > currentMonth) {
-            nextTournament = { label: t.label, year: currentYear };
-            break;
-        }
-    }
-    if (!nextTournament) {
-        nextTournament = { label: tournamentMonths[0].label, year: currentYear + 1 };
-    }
+    // Find next upcoming tournament from data
+    const nextTournament = allTournaments.find(t => !t.matches || t.matches.length === 0);
 
     let html = '';
     if (champName) {
@@ -72,11 +56,13 @@ async function renderMarquee(tournaments, rankings) {
                 </div>
             </div>`;
     }
-    html += `
-        <div class="marquee-next">
-            <div class="next-label">Next Tournament</div>
-            <div class="next-date">${nextTournament.label} ${nextTournament.year}</div>
-        </div>`;
+    if (nextTournament) {
+        html += `
+            <div class="marquee-next">
+                <div class="next-label">Next Tournament</div>
+                <div class="next-date">${nextTournament.name} — ${nextTournament.date}</div>
+            </div>`;
+    }
 
     banner.innerHTML = html;
     banner.style.display = 'flex';
@@ -154,9 +140,36 @@ function renderTournamentHistory(tournaments) {
         return;
     }
 
-    const sorted = [...tournaments].reverse();
+    // Sort: upcoming first (by date ascending), then completed (by date descending)
+    const upcoming = tournaments.filter(t => !t.matches || t.matches.length === 0)
+        .sort((a, b) => a.date.localeCompare(b.date));
+    const completed = tournaments.filter(t => t.matches && t.matches.length > 0)
+        .sort((a, b) => b.date.localeCompare(a.date));
+    const sorted = [...upcoming, ...completed];
 
     container.innerHTML = sorted.map(t => {
+        const isUpcoming = !t.matches || t.matches.length === 0;
+
+        if (isUpcoming) {
+            const seedingsNote = t.seedings && t.seedings.length > 0
+                ? '<small class="text-success d-block mt-1"><i class="bi bi-check-circle me-1"></i>Seedings announced</small>' : '';
+            return `
+            <div class="card mb-3 tournament-card" onclick="window.location='tournament.html?id=${t.id}'">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">${t.name}</h5>
+                        <small class="text-muted"><i class="bi bi-calendar-event me-1"></i>${t.date}</small>
+                        ${seedingsNote}
+                    </div>
+                    <div class="text-end">
+                        <span class="badge bg-warning text-dark">
+                            <i class="bi bi-clock me-1"></i>Upcoming
+                        </span>
+                    </div>
+                </div>
+            </div>`;
+        }
+
         const matchCount = t.matches.filter(m => !m.bye).length;
         const playerCount = new Set(
             t.matches.flatMap(m => [m.player1, m.player2])
@@ -178,7 +191,7 @@ function renderTournamentHistory(tournaments) {
             </div>`;
     }).join('');
 
-    for (const t of sorted) {
+    for (const t of completed) {
         const champId = Rankings.getChampion(t);
         if (champId) {
             DataStore.getPlayerName(champId).then(name => {
