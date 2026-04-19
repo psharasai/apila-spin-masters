@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "apilatt",
+    "target": "prod",
     "public": ".",
     "ignore": [
       "firebase.json",
