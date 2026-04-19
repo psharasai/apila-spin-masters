@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "apilatt-a5b1f"
+  },
+  "targets": {
+    "apilatt-a5b1f": {
+      "hosting": {
+        "prod": [
+          "apilatt"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
