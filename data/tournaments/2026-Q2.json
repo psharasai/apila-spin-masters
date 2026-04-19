@@ -1,0 +1,24 @@
+{
+  "id": "2026-Q2",
+  "name": "Q2 2026 Tournament",
+  "date": "2026-06-06",
+  "endDate": "2026-06-07",
+  "status": "upcoming",
+  "scoringType": "placement",
+  "notes": "Second quarterly tournament. Seedings are based on live ranking points from Q1 2026.",
+  "seedings": [
+    { "seed": 1, "playerId": "praveen-varma", "points": 500 },
+    { "seed": 2, "playerId": "sai-sharath", "points": 300 },
+    { "seed": 3, "playerId": "abhijit", "points": 180 },
+    { "seed": 4, "playerId": "ravisankar", "points": 180 },
+    { "seed": 5, "playerId": "shikhar", "points": 90 },
+    { "seed": 6, "playerId": "pramod-kumar", "points": 90 },
+    { "seed": 7, "playerId": "akhil", "points": 90 },
+    { "seed": 8, "playerId": "sudhanshu", "points": 90 },
+    { "seed": 9, "playerId": "ranjit", "points": 45 },
+    { "seed": 10, "playerId": "kangkan-kumar", "points": 45 }
+  ],
+  "groups": [],
+  "matches": [],
+  "withdrawals": []
+}

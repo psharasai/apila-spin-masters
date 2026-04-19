@@ -1,0 +1,12 @@
+{
+  "id": "2026-finale",
+  "name": "Year-End Finale 2026",
+  "date": "2026-12-05",
+  "endDate": "2026-12-06",
+  "status": "upcoming",
+  "scoringType": "match-cumulative",
+  "notes": "Year-End Finale. Top 6 ranked players qualify directly. Players ranked 7th and below play qualifiers for the remaining 2 spots. Finale uses cumulative match-win points: 200 per round-robin win, 400 for semifinal win, 500 for final win.",
+  "groups": [],
+  "matches": [],
+  "withdrawals": []
+}
