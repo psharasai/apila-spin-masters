@@ -706,13 +706,13 @@ footer {
     /* Page headings */
     h2 { font-size: 1.4rem; }
 
-    /* Player page — points breakdown table: hide Played/Won/Lost */
-    .card .table th:nth-child(2),
-    .card .table td:nth-child(2),
-    .card .table th:nth-child(3),
-    .card .table td:nth-child(3),
-    .card .table th:nth-child(4),
-    .card .table td:nth-child(4) {
+    /* Player profile — points breakdown table: hide Played/Won/Lost */
+    #playerPointsTable th:nth-child(2),
+    #playerPointsTable td:nth-child(2),
+    #playerPointsTable th:nth-child(3),
+    #playerPointsTable td:nth-child(3),
+    #playerPointsTable th:nth-child(4),
+    #playerPointsTable td:nth-child(4) {
         display: none;
     }
 
