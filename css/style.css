@@ -259,6 +259,11 @@ main.container {
     padding-bottom: 10px;
 }
 
+/* Players table — allow horizontal scroll on mobile */
+#playersTable {
+    min-width: 600px;
+}
+
 /* Podium row highlights in table */
 .rank-row-gold {
     background: linear-gradient(90deg, rgba(255, 215, 0, 0.12), transparent 70%) !important;
@@ -669,14 +674,6 @@ footer {
     }
     .rank-badge { width: 28px; height: 28px; font-size: 0.8rem; }
 
-    /* Players table — hide Played and Win% on mobile */
-    #playersTable th:nth-child(3),
-    #playersTable td:nth-child(3),
-    #playersTable th:nth-child(6),
-    #playersTable td:nth-child(6) {
-        display: none;
-    }
-
     /* Match cards — stack content */
     .match-card {
         flex-wrap: wrap;
@@ -764,14 +761,6 @@ footer {
 
     /* Rankings — already minimal at 480 */
 
-    /* Players table — also hide Won/Lost on very small screens */
-    #playersTable th:nth-child(4),
-    #playersTable td:nth-child(4),
-    #playersTable th:nth-child(5),
-    #playersTable td:nth-child(5) {
-        display: none;
-    }
-
     /* Group tables — compact */
     .group-card .table th,
     .group-card .table td {
@@ -811,4 +800,172 @@ footer {
 
     /* Footer */
     footer small { font-size: 0.7rem; }
+}
+
+/* ========== LIGHT THEME OVERRIDES ========== */
+[data-bs-theme="light"] {
+    --tt-body-bg: #f4f6f8;
+    --tt-surface: #ffffff;
+    --tt-surface-light: #e9ecef;
+    --tt-text: #1a1a2e;
+    --tt-text-muted: #5a6270;
+}
+
+[data-bs-theme="light"] body {
+    background-color: var(--tt-body-bg);
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(255, 102, 0, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 85% 80%, rgba(26, 107, 60, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 140, 0, 0.03) 0%, transparent 60%);
+    color: var(--tt-text);
+}
+
+/* Cards */
+[data-bs-theme="light"] .card {
+    background: var(--tt-surface);
+    border-color: rgba(0,0,0,0.1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+/* Tables */
+[data-bs-theme="light"] .table { color: var(--tt-text); }
+[data-bs-theme="light"] .table thead.table-light th {
+    background: var(--tt-surface-light) !important;
+    color: var(--tt-text-muted);
+    border-color: rgba(0,0,0,0.08);
+}
+[data-bs-theme="light"] .table tbody tr { border-color: rgba(0,0,0,0.06); }
+[data-bs-theme="light"] .table-hover tbody tr:hover {
+    background-color: rgba(255,102,0,0.06) !important;
+    color: var(--tt-text);
+}
+
+/* Stat cards */
+[data-bs-theme="light"] .stat-card {
+    background: var(--tt-surface);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+
+/* Match cards */
+[data-bs-theme="light"] .match-card {
+    background: var(--tt-surface);
+    border-color: rgba(0,0,0,0.1);
+}
+[data-bs-theme="light"] .match-card:hover {
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+[data-bs-theme="light"] .match-winner { color: var(--tt-text); }
+[data-bs-theme="light"] .match-winner a { color: var(--tt-text) !important; }
+[data-bs-theme="light"] .match-loser { color: var(--tt-text-muted); }
+[data-bs-theme="light"] .match-loser a { color: var(--tt-text-muted) !important; }
+
+/* Bracket */
+[data-bs-theme="light"] .bracket-match {
+    background: var(--tt-surface);
+    border-color: rgba(0,0,0,0.1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+[data-bs-theme="light"] .bracket-player:first-child { border-color: rgba(0,0,0,0.08); }
+[data-bs-theme="light"] .bracket-player a { color: var(--tt-text-muted) !important; }
+[data-bs-theme="light"] .bracket-player.winner a { color: var(--tt-text) !important; }
+[data-bs-theme="light"] .bracket-container::after {
+    background: linear-gradient(90deg, transparent, var(--tt-body-bg));
+}
+
+/* Player / Tournament cards */
+[data-bs-theme="light"] .player-card {
+    background: var(--tt-surface);
+    color: var(--tt-text);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+[data-bs-theme="light"] .player-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    color: var(--tt-text);
+}
+[data-bs-theme="light"] .tournament-card {
+    background: var(--tt-surface);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+[data-bs-theme="light"] .tournament-card h5 { color: var(--tt-text); }
+
+/* Group cards */
+[data-bs-theme="light"] .group-card { border-color: rgba(0,0,0,0.08); }
+[data-bs-theme="light"] .table-success {
+    background-color: rgba(26,107,60,0.1) !important;
+    color: var(--tt-text) !important;
+}
+
+/* Form elements */
+[data-bs-theme="light"] .form-select {
+    background-color: var(--tt-surface);
+    border-color: rgba(0,0,0,0.15);
+    color: var(--tt-text);
+}
+[data-bs-theme="light"] .form-select:focus {
+    background-color: var(--tt-surface);
+    color: var(--tt-text);
+}
+[data-bs-theme="light"] .form-select option {
+    background-color: #fff;
+    color: var(--tt-text);
+}
+
+/* Rank default badge */
+[data-bs-theme="light"] .rank-default { background: rgba(0,0,0,0.08); color: var(--tt-text-muted); }
+
+/* Rules calendar */
+[data-bs-theme="light"] .rules-cal-card {
+    background: var(--tt-surface);
+    border-color: rgba(0,0,0,0.1);
+}
+
+/* Marquee banner */
+[data-bs-theme="light"] .marquee-banner {
+    background: linear-gradient(135deg, rgba(255,102,0,0.06), rgba(255,215,0,0.05));
+    border-color: rgba(255,102,0,0.2);
+}
+[data-bs-theme="light"] .marquee-next { background: rgba(0,0,0,0.04); }
+
+/* Badge overrides */
+[data-bs-theme="light"] .badge.bg-secondary { background-color: #dee2e6 !important; color: #333 !important; }
+
+/* Nav tabs */
+[data-bs-theme="light"] .nav-tabs { border-color: rgba(0,0,0,0.1); }
+[data-bs-theme="light"] .nav-tabs .nav-link { color: var(--tt-text-muted); }
+[data-bs-theme="light"] .nav-tabs .nav-link:hover { color: var(--tt-text); }
+[data-bs-theme="light"] .nav-tabs .nav-link.active { color: var(--tt-accent); }
+
+/* Misc */
+[data-bs-theme="light"] .text-muted { color: var(--tt-text-muted) !important; }
+
+/* Dropdown menus */
+[data-bs-theme="light"] .dropdown-menu-dark {
+    background-color: #fff !important;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+[data-bs-theme="light"] .dropdown-menu-dark .dropdown-item {
+    color: var(--tt-text) !important;
+}
+[data-bs-theme="light"] .dropdown-menu-dark .dropdown-item:hover {
+    background-color: rgba(255,102,0,0.08) !important;
+}
+
+/* Theme toggle button */
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+.theme-toggle-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--tt-accent);
 }
