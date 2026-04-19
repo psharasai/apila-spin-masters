@@ -3,7 +3,7 @@
  */
 const Common = (() => {
 
-    /** Populate the tournament dropdown menu in the navbar */
+    /** Populate the tournament dropdown menu in the navbar, grouped by year */
     async function initNav() {
         try {
             const index = await DataStore.getTournamentIndex();
@@ -11,14 +11,45 @@ const Common = (() => {
             if (!menu) return;
 
             menu.innerHTML = '';
+
+            // Group tournaments by year (from date field)
+            const byYear = {};
             for (const t of index.tournaments) {
-                const li = document.createElement('li');
-                const isUpcoming = t.status === 'upcoming';
-                li.innerHTML = `<a class="dropdown-item ${isUpcoming ? 'text-muted' : ''}" href="tournament.html?id=${t.id}">
-                    ${t.name} <small class="ms-1">${t.date}</small>
-                    ${isUpcoming ? '<span class="badge bg-warning text-dark ms-2" style="font-size:0.65rem">Upcoming</span>' : ''}
-                </a>`;
-                menu.appendChild(li);
+                const year = t.date ? t.date.substring(0, 4) : 'Unknown';
+                if (!byYear[year]) byYear[year] = [];
+                byYear[year].push(t);
+            }
+
+            // Sort years descending (most recent first)
+            const years = Object.keys(byYear).sort((a, b) => b.localeCompare(a));
+
+            for (let yi = 0; yi < years.length; yi++) {
+                const year = years[yi];
+                const tournaments = byYear[year];
+
+                // Year header
+                if (years.length > 1) {
+                    const header = document.createElement('li');
+                    header.innerHTML = `<h6 class="dropdown-header">${year}</h6>`;
+                    menu.appendChild(header);
+                }
+
+                for (const t of tournaments) {
+                    const li = document.createElement('li');
+                    const isUpcoming = t.status === 'upcoming';
+                    li.innerHTML = `<a class="dropdown-item ${isUpcoming ? 'text-muted' : ''}" href="tournament.html?id=${t.id}">
+                        ${t.name} <small class="ms-1">${t.date}</small>
+                        ${isUpcoming ? '<span class="badge bg-warning text-dark ms-2" style="font-size:0.65rem">Upcoming</span>' : ''}
+                    </a>`;
+                    menu.appendChild(li);
+                }
+
+                // Divider between years (not after last)
+                if (yi < years.length - 1) {
+                    const divider = document.createElement('li');
+                    divider.innerHTML = '<hr class="dropdown-divider">';
+                    menu.appendChild(divider);
+                }
             }
         } catch (e) {
             console.warn('Could not load tournament index for nav:', e.message);
