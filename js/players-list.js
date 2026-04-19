@@ -75,7 +75,7 @@ function renderTable(rows, sort) {
     const tbody = document.getElementById('playersBody');
     tbody.innerHTML = sorted.map(r => {
         const pctStr = r.played > 0 ? Math.round(r.winpct) + '%' : '-';
-        const rankDisplay = r.rank <= 999 ? r.rank : '-';
+        const rankDisplay = r.rank < 999 ? r.rank : '-';
         return `
             <tr onclick="window.location='player.html?id=${r.id}'" style="cursor:pointer">
                 <td class="fw-semibold">${r.name}</td>
