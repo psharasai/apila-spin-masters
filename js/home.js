@@ -29,17 +29,6 @@ function renderStats(tournaments, players, rankings) {
     const totalMatches = tournaments.reduce((sum, t) =>
         sum + t.matches.filter(m => !m.bye).length, 0);
     document.getElementById('statMatches').textContent = totalMatches;
-
-    const latest = tournaments[tournaments.length - 1];
-    if (latest) {
-        const champId = Rankings.getChampion(latest);
-        if (champId) {
-            DataStore.getPlayerName(champId).then(name => {
-                const el = document.getElementById('statChampion');
-                el.textContent = name;
-            });
-        }
-    }
 }
 
 async function renderMarquee(tournaments, rankings) {
