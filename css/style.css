@@ -67,6 +67,12 @@ body {
     letter-spacing: 1px;
 }
 .text-accent { color: var(--tt-accent) !important; }
+.apila-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    color: #4caf50;
+    letter-spacing: 2px;
+}
 .hero-subtitle {
     font-size: 1.1rem;
     color: var(--tt-text-muted);
