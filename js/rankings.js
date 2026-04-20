@@ -13,9 +13,9 @@ const Rankings = (() => {
     const PLACEMENT_POINTS = {
         winner:     500,
         runner_up:  300,
-        semifinal:  180,
-        quarterfinal: 90,
-        participant: 45
+        semifinal:  200,
+        quarterfinal: 100,
+        participant: 50
     };
 
     // Simple match points for group stage standings display only
