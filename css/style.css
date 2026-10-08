@@ -267,7 +267,7 @@ main.container {
     padding-bottom: 10px;
 }
 
-/* Players table — allow horizontal scroll on mobile */
+/* Players table */
 #playersTable {
     min-width: 600px;
 }
@@ -370,13 +370,17 @@ main.container {
 .bracket-flex {
     display: flex;
     align-items: stretch;
+    gap: clamp(20px, 3vw, 48px);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .bracket-round {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    min-width: 220px;
-    margin-right: 40px;
+    flex: 1 1 0;
+    min-width: 0;
     position: relative;
 }
 .bracket-round-title {
@@ -422,6 +426,12 @@ main.container {
     font-weight: 700;
     font-family: 'Courier New', monospace;
     color: var(--tt-accent);
+}
+.bracket-set-scores {
+    padding: 8px 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: var(--tt-text-muted);
+    font-size: 0.85rem;
 }
 
 /* ========== Player cards ========== */
@@ -528,22 +538,6 @@ a.text-decoration-none:hover { color: var(--tt-ball); }
     color: var(--tt-accent);
     background: transparent;
     border-color: var(--tt-accent);
-}
-
-/* Scroll hint for bracket on mobile */
-.bracket-container {
-    overflow-x: auto;
-    padding: 20px 0;
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-}
-.bracket-container::after {
-    content: '';
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 40px;
-    background: linear-gradient(90deg, transparent, var(--tt-body-bg));
-    pointer-events: none;
 }
 
 /* ========== Rules page ========== */
@@ -702,11 +696,25 @@ footer {
         font-size: 0.85rem;
     }
     .match-score { font-size: 1rem; }
+    .match-card > .d-flex:nth-child(2) {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+        width: 100%;
+    }
+    .match-card > .d-flex:nth-child(2) > span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    .match-card > .d-flex:nth-child(2) > span:last-child {
+        text-align: right;
+    }
 
     /* Bracket */
-    .bracket-round { min-width: 160px; margin-right: 16px; }
-    .bracket-player { padding: 6px 8px; font-size: 0.8rem; }
-    .bracket-round-title { font-size: 0.7rem; }
+    .bracket-flex { flex-direction: column; gap: 24px; }
+    .bracket-round { width: 100%; }
+    .bracket-matches { gap: 12px; }
+    .bracket-player { font-size: 0.9rem; }
 
     /* Tournament cards */
     .tournament-card .card-body {
@@ -733,6 +741,18 @@ footer {
     #playerPointsTable td:nth-child(4) {
         display: none;
     }
+
+    #playersTable { min-width: 0; }
+    #playersTable th:nth-child(3),
+    #playersTable td:nth-child(3),
+    #playersTable th:nth-child(4),
+    #playersTable td:nth-child(4),
+    #playersTable th:nth-child(5),
+    #playersTable td:nth-child(5) {
+        display: none;
+    }
+
+    .card-header.d-flex { flex-wrap: wrap; gap: 4px; }
 
     /* Nav tabs compact */
     .nav-tabs .nav-link {
@@ -800,10 +820,6 @@ footer {
     /* Podium */
     .podium-card .podium-name { font-size: 0.95rem; }
     .podium-card .podium-points { font-size: 0.8rem; }
-
-    /* Bracket — even more compact */
-    .bracket-round { min-width: 140px; margin-right: 12px; }
-    .bracket-player { padding: 5px 6px; font-size: 0.75rem; }
 
     /* H2H — compact stats on tiny screens */
     .stat-card .stat-number { font-size: 1.2rem; }
@@ -918,12 +934,9 @@ footer {
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 [data-bs-theme="light"] .bracket-player:first-child { border-color: rgba(0,0,0,0.08); }
+[data-bs-theme="light"] .bracket-set-scores { border-color: rgba(0,0,0,0.08); }
 [data-bs-theme="light"] .bracket-player a { color: var(--tt-text-muted) !important; }
 [data-bs-theme="light"] .bracket-player.winner a { color: var(--tt-text) !important; }
-[data-bs-theme="light"] .bracket-container::after {
-    background: linear-gradient(90deg, transparent, var(--tt-body-bg));
-}
-
 /* Player / Tournament cards */
 [data-bs-theme="light"] .player-card {
     background: var(--tt-surface);

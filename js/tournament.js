@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function renderGroupStage(tournament, playersData) {
     const container = document.getElementById('groupTables');
     if (!tournament.groups || tournament.groups.length === 0) {
+        if (tournament.status === 'cancelled') {
+            container.innerHTML = '<p class="text-muted text-center py-4">This tournament did not take place.</p>';
+            return;
+        }
         if (tournament.seedings && tournament.seedings.length > 0) {
             let html = '<div class="col-12"><div class="card"><div class="card-header bg-dark text-white"><h6 class="mb-0">Seedings</h6></div>';
             html += '<div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0">';
@@ -136,7 +140,9 @@ async function renderKnockout(tournament, playersData) {
 
     const knockoutMatches = tournament.matches.filter(m => rounds.includes(m.round));
     if (knockoutMatches.length === 0) {
-        container.innerHTML = '<p class="text-muted text-center py-4"><i class="bi bi-clock me-2"></i>Knockout bracket will be available after the group stage</p>';
+        container.innerHTML = tournament.status === 'cancelled'
+            ? '<p class="text-muted text-center py-4">No knockout matches were played.</p>'
+            : '<p class="text-muted text-center py-4"><i class="bi bi-clock me-2"></i>Knockout bracket will be available after the group stage</p>';
         return;
     }
 
@@ -204,6 +210,9 @@ async function renderKnockout(tournament, playersData) {
         const p1Won = Rankings.isWinner(match, p1);
         const scoreP1 = match.score ? (p1 === match.player1 ? match.score[0] : match.score[1]) : (match.walkover ? 'W/O' : '-');
         const scoreP2 = match.score ? (p2 === match.player1 ? match.score[0] : match.score[1]) : (match.walkover ? 'W/O' : '-');
+        const setScores = match.setScores && (p1 === match.player1
+            ? match.setScores
+            : match.setScores.map(([a, b]) => [b, a]));
 
         return `
             <div class="bracket-match">
@@ -215,6 +224,7 @@ async function renderKnockout(tournament, playersData) {
                     <a href="player.html?id=${p2}" class="text-decoration-none ${!p1Won ? 'text-dark' : 'text-muted'}">${p2Name}</a>
                     <span class="bracket-player-score">${scoreP2}</span>
                 </div>
+                ${setScores && setScores.length ? `<div class="bracket-set-scores">${Common.formatSetScores(setScores)}</div>` : ''}
             </div>`;
     }
 
@@ -243,7 +253,9 @@ async function renderAllMatches(tournament) {
     const matches = tournament.matches.filter(m => !m.bye);
 
     if (matches.length === 0) {
-        container.innerHTML = '<p class="text-muted text-center py-4"><i class="bi bi-clock me-2"></i>No matches played yet</p>';
+        container.innerHTML = tournament.status === 'cancelled'
+            ? '<p class="text-muted text-center py-4">No matches were played.</p>'
+            : '<p class="text-muted text-center py-4"><i class="bi bi-clock me-2"></i>No matches played yet</p>';
         return;
     }
 

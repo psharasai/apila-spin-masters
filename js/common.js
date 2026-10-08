@@ -37,9 +37,11 @@ const Common = (() => {
                 for (const t of tournaments) {
                     const li = document.createElement('li');
                     const isUpcoming = t.status === 'upcoming';
-                    li.innerHTML = `<a class="dropdown-item ${isUpcoming ? 'text-muted' : ''}" href="tournament.html?id=${t.id}">
+                    const isCancelled = t.status === 'cancelled';
+                    li.innerHTML = `<a class="dropdown-item ${isUpcoming || isCancelled ? 'text-muted' : ''}" href="tournament.html?id=${t.id}">
                         ${t.name} <small class="ms-1">${t.date}</small>
                         ${isUpcoming ? '<span class="badge bg-warning text-dark ms-2" style="font-size:0.65rem">Upcoming</span>' : ''}
+                        ${isCancelled ? '<span class="badge bg-secondary ms-2" style="font-size:0.65rem">Cancelled</span>' : ''}
                     </a>`;
                     menu.appendChild(li);
                 }

@@ -43,7 +43,7 @@ async function renderMarquee(completedTournaments, allTournaments) {
     const champName = champId ? await DataStore.getPlayerName(champId) : null;
 
     // Find next upcoming tournament from data
-    const nextTournament = allTournaments.find(t => !t.matches || t.matches.length === 0);
+    const nextTournament = allTournaments.find(t => t.status === 'upcoming');
 
     let html = '';
     if (champName) {
@@ -141,14 +141,29 @@ function renderTournamentHistory(tournaments) {
     }
 
     // Sort: upcoming first (by date ascending), then completed (by date descending)
-    const upcoming = tournaments.filter(t => !t.matches || t.matches.length === 0)
+    const upcoming = tournaments.filter(t => t.status === 'upcoming')
         .sort((a, b) => a.date.localeCompare(b.date));
     const completed = tournaments.filter(t => t.matches && t.matches.length > 0)
         .sort((a, b) => b.date.localeCompare(a.date));
-    const sorted = [...upcoming, ...completed];
+    const cancelled = tournaments.filter(t => t.status === 'cancelled')
+        .sort((a, b) => b.date.localeCompare(a.date));
+    const sorted = [...upcoming, ...completed, ...cancelled];
 
     container.innerHTML = sorted.map(t => {
-        const isUpcoming = !t.matches || t.matches.length === 0;
+        if (t.status === 'cancelled') {
+            return `
+            <div class="card mb-3 tournament-card" onclick="window.location='tournament.html?id=${t.id}'">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">${t.name}</h5>
+                        <small class="text-muted"><i class="bi bi-calendar-event me-1"></i>${t.date}</small>
+                    </div>
+                    <span class="badge bg-secondary">Cancelled</span>
+                </div>
+            </div>`;
+        }
+
+        const isUpcoming = t.status === 'upcoming';
 
         if (isUpcoming) {
             const seedingsNote = t.seedings && t.seedings.length > 0
